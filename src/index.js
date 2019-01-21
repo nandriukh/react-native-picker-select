@@ -188,7 +188,7 @@ export default class RNPickerSelect extends PureComponent {
         onValueChange(value, index);
 
         this.setState({
-            selectedItem: this.state.items[index],
+          selectedItem: this.state.items[index],
         });
     }
 
@@ -279,6 +279,15 @@ export default class RNPickerSelect extends PureComponent {
         );
     });
 
+    onCancel = () => {
+      const { onCancelPress } = this.props;
+      onCancelPress();
+      this.setState(
+        { selectedItem: {  } },
+        this.animatedParallel(0, defaultScale)
+        )
+    }
+
     renderDoneBar = () => {
       const { doneText, hideDoneBar, onUpArrow, onDownArrow, onDonePress, style, onCancelPress, isFocused } = this.props;
 
@@ -323,7 +332,7 @@ export default class RNPickerSelect extends PureComponent {
                     <TouchableWithoutFeedback
                       onPress={() => {
                         this.togglePicker(true);
-                        onCancelPress()
+                        this.onCancel()
                       }}
                       hitSlop={{ top: 2, right: 2, bottom: 2, left: 2 }}
                       testID="cancel_button"
