@@ -148,6 +148,7 @@ export default class RNPickerSelect extends PureComponent {
         super(props);
 
         const items = this.props.items;
+        const preTranslate = this.props.value && this.props.value.length > 0 ? TranslateY : 0;
 
         const { selectedItem } = RNPickerSelect.getSelectedItem({
             items,
@@ -160,7 +161,7 @@ export default class RNPickerSelect extends PureComponent {
             selectedItem,
             showPicker: false,
             animationType: undefined,
-            animation: new Animated.Value(0),
+            animation: new Animated.Value(preTranslate),
             scale: new Animated.Value(defaultScale),
         };
         console.log(items);
