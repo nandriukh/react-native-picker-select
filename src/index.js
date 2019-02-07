@@ -16,10 +16,10 @@ import {
 import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 
-const TranslateY = -30;
+// const TranslateY = -30;
 // const TranslateX = -16;
-const defaultScale = 1;
-const smallerScale = 0.8;
+// const defaultScale = 1;
+// const smallerScale = 0.8;
 
 
 export default class RNPickerSelect extends PureComponent {
@@ -146,7 +146,7 @@ export default class RNPickerSelect extends PureComponent {
 
     constructor(props) {
         super(props);
-
+        const { TranslateY } = props;
         const items = this.props.items;
         const preTranslate = this.props.value && this.props.value.length > 0 ? TranslateY : 0;
 
@@ -162,7 +162,7 @@ export default class RNPickerSelect extends PureComponent {
             showPicker: false,
             animationType: undefined,
             animation: new Animated.Value(preTranslate),
-            scale: new Animated.Value(defaultScale),
+            // scale: new Animated.Value(defaultScale),
         };
         console.log(items);
     }
@@ -209,22 +209,21 @@ export default class RNPickerSelect extends PureComponent {
     }
 
     triggerOpenCloseCallbacks = () => {
-      const { onOpen, onClose } = this.props;
-      const { animation, selectedItem } = this.state;
+      const { selectedItem } = this.state;
+      const { TranslateY } = this.props;
       if (!this.state.showPicker) {
-        this.animatedParallel(TranslateY, smallerScale);
+        this.animatedParallel(TranslateY);
       }
       if (this.state.showPicker && selectedItem.value.length === 0) {
-        this.animatedParallel(0, defaultScale);
+        this.animatedParallel(0);
       };
     };
 
     animatedParallel = (
       transleteValue,
-      fs,
       // transleteXValue: number,
     ) => {
-      const { animation, scale } = this.state;
+      const { animation } = this.state;
         Animated.parallel([
           Animated.spring(animation, {
             toValue: transleteValue,
@@ -236,11 +235,11 @@ export default class RNPickerSelect extends PureComponent {
           //   duration: 300,
           //   useNativeDriver: true,
           // }),
-          Animated.timing(scale, {
-            toValue: fs,
-            duration: 300,
-            useNativeDriver: true,
-          }),
+          // Animated.timing(scale, {
+          //   toValue: fs,
+          //   duration: 300,
+          //   useNativeDriver: true,
+          // }),
         ]).start();
     }
 
@@ -364,7 +363,7 @@ export default class RNPickerSelect extends PureComponent {
 
     renderTextInputOrChildren = () => {
         const { children, hideIcon, style, textInputProps, inputBorder: InputBorder } = this.props;
-        const { showPicker, animation, scale } = this.state;
+        const { showPicker, animation } = this.state;
         const containerStyle =
             Platform.OS === 'ios' ? style.inputIOSContainer : style.inputAndroidContainer;
 
@@ -383,8 +382,8 @@ export default class RNPickerSelect extends PureComponent {
                   { opacity: showPicker ? 1 : 0.7 },
                   { transform: [
                     { translateY: animation },
-                    { scaleX: scale },
-                    { scaleY: scale },
+                    // { scaleX: scale },
+                    // { scaleY: scale },
                   ],
                   },
                 ]}
