@@ -593,7 +593,7 @@ const defaultStyles = StyleSheet.create({
     },
     lable: {
       color: '#24213d',
-      fontFamily: 'GTAmericaTrial-ExtendedLight',
+      fontFamily: 'GTAmerica-ExtendedLight',
       fontSize: 11,
       fontWeight: '300',
       letterSpacing: 0.19,
