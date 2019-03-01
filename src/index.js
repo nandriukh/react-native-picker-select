@@ -16,10 +16,6 @@ import {
 import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 
-// const TranslateY = -30;
-// const TranslateX = -16;
-// const defaultScale = 1;
-// const smallerScale = 0.8;
 const isAndroid = Platform.OS === 'android';
 
 export default class RNPickerSelect extends PureComponent {
@@ -121,13 +117,17 @@ export default class RNPickerSelect extends PureComponent {
     constructor(props) {
         super(props);
         const { TranslateY } = props;
-        const items = [this.props.placeholder, ...this.props.items];
+        const items = [props.placeholder, ...props.items];
         // const items = this.props.items;
-        const preTranslate = this.props.value && this.props.value.length > 0 ? TranslateY : 0;
-        
+        const preTranslate = props.value && props.value.length > 0 ? TranslateY : 0;
+        const { selectedItem } = RNPickerSelect.getSelectedItem({
+          items,
+          key: this.props.itemKey,
+          value: this.props.value,
+        });
         this.state = {
             items,
-            selectedItem: '',
+            selectedItem: props.value?.length > 0 ? selectedItem : '',
             showPicker: false,
             animationType: undefined,
             animation: new Animated.Value(preTranslate),
